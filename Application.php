@@ -342,7 +342,7 @@ class Application
         }
         $worker->addFunction($job->getName(), function (\GearmanJob $gearmanJob) use ($root, $job) {
             $retval = $root->executeJob($job, $gearmanJob, $root);
-            return serialize($retval);
+            return Serialize::encode($retval);
         });
         return $this;
     }
@@ -356,7 +356,7 @@ class Application
     }
 
     /**
-     * @param callable $callback
+     * @param callable|Closure $callback
      * @return $this
      */
     public function addCallback(Closure $callback)
