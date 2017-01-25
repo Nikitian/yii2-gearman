@@ -34,8 +34,13 @@ class Client
      */
     public function __construct(Config $config, LoggerInterface $logger = null)
     {
-        $this->setClient(new GearmanClient());
+        $client = new GearmanClient();
+        if($config->getTimeout() > 0) {
+            $client->setTimeout($config->getTimeout());
+        }
+        $this->setClient($client);
         $this->setConfig($config);
+
         if (null !== $logger) {
             $this->setLogger($logger);
         }

@@ -25,6 +25,7 @@ It is recommended that you install the Gearman library [through composer](http:/
           ['host' => '127.0.0.1', 'port' => 4730],
       ],
       'user' => 'www-data',
+      // 'timeout' => 30000,
       'jobs' => [
           'syncCalendar' => [
               'class' => 'common\jobs\SyncCalendar'
@@ -80,6 +81,13 @@ Yii::$app->gearman->getDispatcher()->execute('syncCalendar', new JobWorkload([
         'data' => 'value'
     ]
 ])); // run synchronize
+
+
+Yii::$app->gearman->setTimeout(10000)->getDispatcher()->execute('syncCalendar', new JobWorkload([
+    'params' => [
+        'data' => 'value'
+    ]
+])); // set timeout in milliseconds
 ```
 
 ## Example of [Supervisor](http://supervisord.org/) config to manage multiple workers

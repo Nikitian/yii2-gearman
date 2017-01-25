@@ -9,6 +9,8 @@ class GearmanComponent extends \yii\base\Component
     public $servers;
     
     public $user;
+
+    public $timeout;
     
     public $jobs = [];
     
@@ -45,6 +47,17 @@ class GearmanComponent extends \yii\base\Component
     }
 
     /**
+     * Sets the timeout
+     * @param int $milliseconds
+     * @return $this
+     */
+    public function setTimeout($milliseconds)
+    {
+        $this->timeout = (int)$milliseconds;
+        return $this;
+    }
+
+    /**
      * @return \thmrxx\yii2\gearman\Dispatcher
      */
     public function getDispatcher()
@@ -73,7 +86,8 @@ class GearmanComponent extends \yii\base\Component
 
             $this->_config = new Config([
                 'servers' => $servers,
-                'user' => $this->user
+                'user' => $this->user,
+                'timeout' => $this->timeout,
             ]);
         }
         
